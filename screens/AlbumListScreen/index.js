@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AlbumList from './AlbumList';
+import NoDataPlaceholder from './NoDataPlaceholder';
 
 const mockData = [
   {
@@ -55,6 +56,32 @@ class AlbumListScreen extends React.Component {
     title: 'Album List',
   };
 
+  state = {
+    albumList: [],
+  };
+
+  addAlbum(album) {
+    // TODO: Add an album to Firestore
+  }
+
+  subscribeToFirestore() {
+    // TODO: Retrieve list of albums to firestore
+  }
+
+  updateState = (docs) => {
+    // TODO: Convert data to correct format & setState
+  }
+
+  addMockData = () => {
+    mockData.forEach(mockAlbum => {
+      const {
+        _id,
+        ...album
+      } = mockAlbum;
+      this.addAlbum(album);
+    });
+  }
+
   handleAlbumSelected = (id) => {
     const { navigation } = this.props;
 
@@ -62,12 +89,23 @@ class AlbumListScreen extends React.Component {
   }
 
   render() {
-    return (
-      <AlbumList
-        albumList={mockData}
-        onAlbumSelected={this.handleAlbumSelected}
-      />
-    );
+    const { albumList } = this.state;
+
+    if (albumList.length === 0) {
+      return (
+        <NoDataPlaceholder
+          addMockData={this.addMockData}
+        />
+      );
+    }
+    else {
+      return (
+        <AlbumList
+          albumList={mockData}
+          onAlbumSelected={this.handleAlbumSelected}
+        />
+      );
+    }
   }
 }
 
