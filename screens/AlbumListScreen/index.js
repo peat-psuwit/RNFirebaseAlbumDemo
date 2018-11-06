@@ -1,8 +1,6 @@
 import React from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+
+import AlbumList from './AlbumList';
 
 const mockData = [
   {
@@ -49,14 +47,21 @@ const mockData = [
 
 class AlbumListScreen extends React.Component {
   static navigationOptions = {
-    title: 'AlbumListScreen',
+    title: 'Album List',
   };
+
+  handleAlbumSelected = (id) => {
+    const { navigation } = this.props;
+
+    navigation.navigate('AlbumDetailScreen', { albumId: id });
+  }
 
   render() {
     return (
-      <View>
-        <Text>AlbumListScreen</Text>
-      </View>
+      <AlbumList
+        albumList={mockData}
+        onAlbumSelected={this.handleAlbumSelected}
+      />
     );
   }
 }
