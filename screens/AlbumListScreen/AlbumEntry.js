@@ -21,6 +21,7 @@ class AlbumEntry extends React.Component {
       title,
       artist,
       thumbnail_image,
+      avg_rating,
     } = album;
 
     return (
@@ -35,7 +36,8 @@ class AlbumEntry extends React.Component {
           />
           <View style={styles.textContainer}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.artist}>{artist}</Text>
+            <Text style={styles.body}>Artist: {artist}</Text>
+            <Text style={styles.body}>Rating: {avg_rating}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -56,8 +58,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    width: 48,
-    height: 48,
+    width: 64,
+    height: 64,
   },
   textContainer: {
     flex: 1,
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
   },
-  artist: {
+  body: {
     fontWeight: 'normal',
   }
 });
