@@ -3,10 +3,12 @@ import { createStackNavigator } from 'react-navigation';
 
 import AlbumListScreen from './screens/AlbumListScreen';
 import AlbumDetailScreen from './screens/AlbumDetailScreen';
+import AddCommentScreen from './screens/AddCommentScreen';
 
 const RootStack = createStackNavigator({
   AlbumListScreen,
   AlbumDetailScreen,
+  AddCommentScreen,
 }, {
   initialRouteName: 'AlbumListScreen',
 });
