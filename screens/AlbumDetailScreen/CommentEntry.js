@@ -13,7 +13,7 @@ function CommentEntry({ comment }) {
         <Text style={styles.bold}>From: </Text>
         {comment.name}
         <Text style={styles.bold}> On: </Text>
-        {comment.timestamp.toString()}
+        {comment.timestamp ? comment.timestamp.toString() : ''}
       </Text>
     </View>
   );
