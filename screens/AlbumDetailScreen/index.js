@@ -38,7 +38,11 @@ class AlbumDetailScreen extends React.Component {
   }
 
   handleAddComment = () => {
-    // TODO(self): navigate to add comment screen
+    const { navigation } = this.props;
+
+    navigation.navigate('AddCommentScreen', {
+      albumId: navigation.getParam('albumId')
+    });
   }
 
   renderCommentList() {
