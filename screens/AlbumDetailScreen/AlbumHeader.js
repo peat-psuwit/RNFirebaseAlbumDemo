@@ -20,13 +20,14 @@ class AlbumHeader extends React.Component {
       title,
       artist,
       image,
+      url,
     } = album;
 
     return (
       <View style={styles.container}>
         <Image
           style={styles.image}
-          source={{ uri: image }}
+          source={ image ? { uri: image } : null}
         />
         
         <View style={styles.rightContainer}>
@@ -37,6 +38,7 @@ class AlbumHeader extends React.Component {
             <Button
               title="See on Amazon"
               onPress={this.handleSeePressed}
+              disabled={!url}
             />
           </View>
 

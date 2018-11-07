@@ -1,49 +1,73 @@
 import React from 'react';
 import {
-  Text,
+  StyleSheet,
   View,
 } from 'react-native';
+
 import AlbumHeader from './AlbumHeader';
 import CommentList from './CommentList';
-
-const mockAlbum = {
-  _id: "B0014I4KH6",
-  "title": "Taylor Swift",
-  "artist": "Taylor Swift",
-  "url": "https://www.amazon.com/Taylor-Swift/dp/B0014I4KH6",
-  "image": "https://images-na.ssl-images-amazon.com/images/I/61McsadO1OL.jpg",
-  "thumbnail_image": "https://i.imgur.com/K3KJ3w4h.jpg"
-};
-
-const mockComments = [
-  {
-    _id: 'lkkkkk',
-    name: 'Peat',
-    comment: 'Very good',
-    timestamp: new Date(),
-  }
-]
+import NoCommentPlaceholder from './NoCommentPlaceholder';
 
 class AlbumDetailScreen extends React.Component {
   static navigationOptions = {
     title: 'Album detail',
   };
 
+  state = {
+    album: {
+      title: '',
+      artist: '',
+      url: '',
+      image: '',
+      thumbnail_image: '',
+    },
+
+    comments: [],
+  };
+
+  getAlbum() {
+    // TODO: get album data from Firestore
+  }
+
+  subscribeToComment() {
+    // TODO: subscribe to Firestore for comment
+  }
+
+  updateCommentState() {
+    // TODO: convert data to correct format & update state
+  }
+
   handleAddComment = () => {
     // TODO(self): navigate to add comment screen
   }
 
+  renderCommentList() {
+    const { comments } = this.state;
+    if (comments.length === 0)
+      return <NoCommentPlaceholder />
+    else
+      return <CommentList commentList={comments} />
+  }
+
   render() {
+    const { album } = this.state;
+
     return (
-      <View>
+      <View style={styles.container}>
         <AlbumHeader
-          album={mockAlbum}
+          album={album}
           onAddComment={this.handleAddComment}
         />
-        <CommentList commentList={mockComments} />
+        {this.renderCommentList()}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default AlbumDetailScreen;
