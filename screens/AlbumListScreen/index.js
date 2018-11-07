@@ -1,4 +1,7 @@
 import React from 'react';
+import firebase from 'react-native-firebase';
+
+const firestore = firebase.firestore();
 
 import AlbumList from './AlbumList';
 import NoDataPlaceholder from './NoDataPlaceholder';
@@ -56,7 +59,8 @@ class AlbumListScreen extends React.Component {
   };
 
   addAlbum(album) {
-    // TODO: Add an album to Firestore
+    const collection = firestore.collection('albums');
+    collection.add(album);
   }
 
   subscribeToFirestore() {
