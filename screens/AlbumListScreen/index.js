@@ -63,8 +63,20 @@ class AlbumListScreen extends React.Component {
     // TODO: Retrieve list of albums to firestore
   }
 
-  updateState = (docs) => {
+  updateState(docs) {
     // TODO: Convert data to correct format & setState
+  }
+
+  unsubscribeFromFirestore() {
+    // TODO: unsubscribe from Firestore
+  }
+
+  componentDidMount() {
+    this.subscribeToFirestore();
+  }
+
+  componentWillUnmount() {
+     this.unsubscribeFromFirestore();
   }
 
   addMockData = () => {

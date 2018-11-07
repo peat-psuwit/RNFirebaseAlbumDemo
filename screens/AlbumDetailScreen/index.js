@@ -37,6 +37,19 @@ class AlbumDetailScreen extends React.Component {
     // TODO: convert data to correct format & update state
   }
 
+  unsubscribeFromComment() {
+    // TODO: unsubscribe from Firestore
+  }
+
+  componentDidMount() {
+    this.getAlbum();
+    this.subscribeToComment();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromComment();
+  }
+
   handleAddComment = () => {
     const { navigation } = this.props;
 
