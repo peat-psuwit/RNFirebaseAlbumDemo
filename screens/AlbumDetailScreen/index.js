@@ -3,6 +3,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import firebase from 'react-native-firebase';
+
+const firestore = firebase.firestore();
 
 import AlbumHeader from './AlbumHeader';
 import CommentList from './CommentList';
@@ -25,8 +28,14 @@ class AlbumDetailScreen extends React.Component {
     comments: [],
   };
 
-  getAlbum() {
-    // TODO: get album data from Firestore
+  subscribeToAlbum() {
+    const { navigation } = this.props;
+    const albumId = navigation.getParam('albumId');
+    const docRef = firestore.collection('albums').doc(albumId);
+
+    this.albumSubscription = docRef.onSnapshot((doc) => {
+      this.setState({ album: doc.data() });
+    });
   }
 
   subscribeToComment() {
@@ -41,12 +50,17 @@ class AlbumDetailScreen extends React.Component {
     // TODO: unsubscribe from Firestore
   }
 
+  unsubscribeFromAlbum() {
+    this.albumSubscription();
+  }
+
   componentDidMount() {
-    this.getAlbum();
+    this.subscribeToAlbum();
     this.subscribeToComment();
   }
 
   componentWillUnmount() {
+    this.unsubscribeFromAlbum();
     this.unsubscribeFromComment();
   }
 
