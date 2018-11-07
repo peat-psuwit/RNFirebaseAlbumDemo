@@ -64,15 +64,23 @@ class AlbumListScreen extends React.Component {
   }
 
   subscribeToFirestore() {
-    // TODO: Retrieve list of albums to firestore
+    const collection = firestore.collection('albums');
+    this.subscription = collection.onSnapshot((snapshot) => {
+      this.updateState(snapshot.docs);
+    });
   }
 
   updateState(docs) {
-    // TODO: Convert data to correct format & setState
+    const albumList = docs.map((doc) => ({
+      _id: doc.id,
+      ...doc.data(),
+    }));
+
+    this.setState({ albumList });
   }
 
   unsubscribeFromFirestore() {
-    // TODO: unsubscribe from Firestore
+    this.subscription();
   }
 
   componentDidMount() {
