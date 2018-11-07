@@ -39,15 +39,28 @@ class AlbumDetailScreen extends React.Component {
   }
 
   subscribeToComment() {
-    // TODO: subscribe to Firestore for comment
+    const { navigation } = this.props;
+    const albumId = navigation.getParam('albumId');
+    const collection = firestore.collection('albums')
+                                .doc(albumId)
+                                .collection('comments');
+
+    this.commentsSubscription = collection.onSnapshot((snapshot) => {
+      this.updateCommentState(snapshot.docs);
+    })
   }
 
-  updateCommentState() {
-    // TODO: convert data to correct format & update state
+  updateCommentState(docs) {
+    const comments = docs.map((doc) => ({
+      _id: doc.id,
+      ...doc.data(),
+    }));
+
+    this.setState({ comments });
   }
 
   unsubscribeFromComment() {
-    // TODO: unsubscribe from Firestore
+    this.commentsSubscription();
   }
 
   unsubscribeFromAlbum() {
