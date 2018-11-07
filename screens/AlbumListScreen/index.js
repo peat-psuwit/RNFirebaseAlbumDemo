@@ -96,7 +96,7 @@ class AlbumListScreen extends React.Component {
     else {
       return (
         <AlbumList
-          albumList={mockData}
+          albumList={albumList}
           onAlbumSelected={this.handleAlbumSelected}
         />
       );
