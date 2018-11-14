@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Rating } from 'react-native-ratings';
 
 class AlbumHeader extends React.Component {
   handleSeePressed = () => {
@@ -21,6 +22,7 @@ class AlbumHeader extends React.Component {
       artist,
       image,
       url,
+      avg_rating,
     } = album;
 
     return (
@@ -33,6 +35,13 @@ class AlbumHeader extends React.Component {
         <View style={styles.rightContainer}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.artist}>{artist}</Text>
+
+          <Rating
+            readonly
+            type="star"
+            imageSize={28}
+            startingValue={typeof avg_rating === 'number' ? avg_rating : 0}
+          />
 
           <View style={styles.buttonWrapper}>
             <Button
