@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import { Rating } from 'react-native-ratings';
 
 class AlbumEntry extends React.Component {
   handlePressed = () => {
@@ -21,6 +22,7 @@ class AlbumEntry extends React.Component {
       title,
       artist,
       thumbnail_image,
+      avg_rating,
     } = album;
 
     return (
@@ -36,6 +38,12 @@ class AlbumEntry extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.artist}>{artist}</Text>
+            <Rating
+              readonly
+              type="star"
+              imageSize={20}
+              startingValue={typeof avg_rating === 'number' ? avg_rating : 0}
+            />
           </View>
         </View>
       </TouchableHighlight>

@@ -13,6 +13,7 @@ class AddCommentScreen extends React.Component {
   state = {
     comment: {
       name: '',
+      rating: 3,
       comment: '',
     },
     disableForm: false,

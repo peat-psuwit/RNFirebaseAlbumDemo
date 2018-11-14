@@ -5,6 +5,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { Rating } from 'react-native-ratings';
 
 class CommentForm extends React.Component {
   handleNameChanged = (text) => {
@@ -13,6 +14,16 @@ class CommentForm extends React.Component {
       onCommentChanged({
         ...comment,
         name: text,
+      });
+    }
+  }
+
+  handleRatingChanged = (rating) => {
+    const { comment, onCommentChanged } = this.props;
+    if (typeof onCommentChanged === 'function') {
+      onCommentChanged({
+        ...comment,
+        rating,
       });
     }
   }
@@ -29,7 +40,7 @@ class CommentForm extends React.Component {
 
   render() {
     const {
-      comment: { name, comment },
+      comment: { name, rating, comment },
       onAddComment,
       disabled,
     } = this.props;
@@ -41,6 +52,16 @@ class CommentForm extends React.Component {
           onChangeText={this.handleNameChanged}
           editable={!disabled}
         />
+        <View style={styles.ratingWrapper}>
+          <Rating
+            type="star"
+            showRating={true}
+            imageSize={32}
+            fraction={0}
+            startingValue={rating}
+            onFinishRating={this.handleRatingChanged}
+          />
+        </View>
         <TextInput
           placeholder="Comment"
           style={styles.comment}
@@ -63,6 +84,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: 'white',
+  },
+  ratingWrapper: {
+    alignSelf: 'center',
   },
   comment: {
     height: 160,
