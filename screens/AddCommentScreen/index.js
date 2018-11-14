@@ -25,13 +25,39 @@ class AddCommentScreen extends React.Component {
     const { comment } = this.state;
     const { navigation } = this.props;
     const albumId = navigation.getParam('albumId');
-    const collection = firestore.collection('albums')
-                                .doc(albumId)
-                                .collection('comments');
+    const albumRef = firestore.collection('albums')
+                              .doc(albumId);
+    const collection = albumRef.collection('comments');
 
-    collection.add({
-      ...comment,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    firestore.runTransaction((t) => {
+      return t.get(albumRef)
+        .then((albumDoc) => {
+          const { rating_count, avg_rating } = albumDoc.data();
+          let new_rating_count, new_avg_rating;
+
+          if (rating_count === undefined) {
+            new_rating_count = 1;
+            new_avg_rating = comment.rating;
+          }
+          else {
+            new_rating_count = rating_count + 1;
+            new_avg_rating =
+              ((avg_rating * rating_count) + comment.rating)
+              / new_rating_count;
+          }
+
+          const newCommentRef = collection.doc();
+          return Promise.all([
+            t.set(newCommentRef, {
+              ...comment,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            }),
+            t.update(albumRef, {
+              rating_count: new_rating_count,
+              avg_rating: new_avg_rating,
+            }),
+          ]);
+        });
     }).then(() => navigation.pop());
   }
 
